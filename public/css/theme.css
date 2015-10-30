@@ -1,0 +1,30 @@
+small, .small{
+    font-size : 67% !important;
+  }
+.row{
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.pa {
+  margin-bottom: 40px;
+}
+.panel{
+  margin-top: 5%;
+}
+.pa a{
+  color: #000;
+  text-decoration: none;
+}
+.blank {
+  width: 58px;
+  height: 58px;
+  background-image: url("img/blank.gif"); 
+}
+ .btn{
+  border-radius: 0px !important;
+}
+.dropdown-menu{
+  border-radius: 0px !important;
+  min-width: 120px !important;
+  font-size: 13px !important;
+}
