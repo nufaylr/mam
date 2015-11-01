@@ -9,7 +9,7 @@
 		                @foreach ($apps as $app)
 		                	<div class="col-xs-6 col-sm-3 pa">
 	    						<a href='/store/apps/{{$app->id}}'>
-	                      			<img class='img-rounded blank' src='mdm/{{$app->app_slug}}/{{$app->icon}}'>
+	                      			<img class='img-rounded blank' src='/mdm/{{$app->app_slug}}/{{$app->app_slug}}.png'>
 	                      			<h5>{{$app->app_name}}</h5>
 	                    		</a>
                     		</div>

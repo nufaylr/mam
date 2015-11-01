@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppListsTable extends Migration
+class CreateAppTables extends Migration
 {
     /**
      * Run the migrations.
@@ -24,18 +24,19 @@ class CreateAppListsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('app_type', function (Blueprint $table) {
+        Schema::create('types', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('platform');
+            $table->string('file_extension');
             $table->timestamps();
         });
 
-        Schema::create('app_lists', function (Blueprint $table) {
+        Schema::create('app_type', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('app_type_id')->unsigned()->index();
-            $table->foreign('app_type_id')->references('id')->on('app_type');
+            $table->integer('type_id')->unsigned()->index();
+            $table->foreign('type_id')->references('id')->on('types');
             $table->integer('app_id')->unsigned()->index();
             $table->foreign('app_id')->references('id')->on('apps');
             $table->timestamps();
@@ -50,7 +51,7 @@ class CreateAppListsTable extends Migration
     public function down()
     {
         Schema::drop('apps');
-        Schema::drop('app_lists');
+        Schema::drop('types');
         Schema::drop('app_type');
     }
 }

@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Apps;
-use App\AppList;
+use App\Types;
 use Jenssegers\Agent\Agent;
 
 class appListController extends Controller
@@ -21,24 +21,46 @@ class appListController extends Controller
     }
 
     public function index() {
-        $_appList = Apps::where('publish', 1)->orderBy('id', 'desc')->get();
-        return view('home',['apps' => $_appList]);
+        $appList = Apps::where('publish', 1)->orderBy('id', 'desc')->get();
+        return view('home',['apps' => $appList]);
     }
 
     public function appItem($aid) {
-       $_diviseTyp = $this->detectDevice();
+       $getAppsRelativeToId = Apps::with('getAppType')->where('id', $aid)->where('publish', 1)->get();
+       $deviceListed = $this->checkForDeviceIsListed();
+       $appLinkPath = $this->getDeviceItem($deviceListed['id'], $getAppsRelativeToId);
+       return view('appdetails', ['appsDetails' => $getAppsRelativeToId[0]['attributes'], 'linkPath' => $appLinkPath]);
+    }
 
-       //Geting App By Device       
-      // $_appList = AppList::with('getAppList')->where('app_id', $aid)->get();
-       //$_appType = AppList::with('getAppType')->where('app_id', $aid)->get();
-       
-       dd(AppList::with('getAppType')->get());
+    public function checkForDeviceIsListed() {
+        $getUsersDeviceTyp = $this->detectDevice();
+        $deviceDatabase = Types::where('platform', $getUsersDeviceTyp)->get();
+        $sendData = array();
+        if(  isset($deviceDatabase->lists('id')[0]) ){
+            $sendData['platform'] = $deviceDatabase->lists('platform')[0];
+            $sendData['id'] = $deviceDatabase->lists('id')[0];
+        } else {
+            $sendData['platform'] = '';
+            $sendData['id'] = '';
+        }
+        return $sendData;
+    }
 
-       return view('appdetails');
+    public function getDeviceItem($deviceListedId, $getAppsRelativeToId) {
+        foreach ($getAppsRelativeToId as $array) {
+            foreach ($array['relations'] as $object) {
+                foreach ($object as $value) {
+                   if($value['attributes']['id'] == $deviceListedId){
+                        return 'mdm/'.$array['attributes']['app_slug'].'/'.$value['attributes']['platform'].'/'.$array['attributes']['app_slug'].$value['attributes']['file_extension'];
+                   }
+                }
+            }
+        }
+        return 'mdm/_none';
     }
 
     public function detectDevice() {
-        //https://github.com/jenssegers/agent
+        // @ https://github.com/jenssegers/agent
         $agent = new Agent();
         if($agent->isMobile() || $agent->isTablet()){
             if($agent->is('android')){

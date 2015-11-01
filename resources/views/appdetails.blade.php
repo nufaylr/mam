@@ -10,15 +10,23 @@
 			                <div class="col-xs-11 col-sm-11 col-lg-11">
 			                  <ul class="media-list">
 			                    <li class="media">
-			                      <a class="pull-left" href="#">
-			                        <img class="img-rounded blank" src="">
-			                      </a>
+			                      <div class="pull-left">
+			                      	<div class="row">
+			                      		<div class="col-md-12">
+			                      			<img class="img-rounded blank" src=" /mdm/{{{ $appsDetails['app_slug'] }}}/{{{ $appsDetails['app_slug'] }}}.png">
+			                      		</div>
+			                      		<div class="col-md-12">
+			                      			<br/>
+			                      			<a href="/{{{ $linkPath }}}" class="btn btn-success">Install</a>
+			                      		</div>
+			                      	</div>
+			                      </div>
 			                      
 			                      <div class="media-body">
-			                        <h3 id="title" style="text-align:left;"> </h3>                     
+			                        <h3 id="title" style="text-align:left;">{{{ $appsDetails['app_name'] }}}</h3>                     
 			                        <div id="downloadGroup" class="btn-group" style="text-align:left;"></div>
 			                        <p></p>
-			                        <p id="desc" style='min-height:150px; color:#999999;'></p> 
+			                        <p id="desc" style='min-height:150px; color:#999999;'>{{{ $appsDetails['full_description'] }}}</p> 
 			                      </div>
 			                    </li>
 			                  </ul>
