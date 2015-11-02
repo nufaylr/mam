@@ -34,7 +34,7 @@
               			</div>                
 	            	</div>  				  
   				</div>
-  			<a class="btn btn-default" href="auth/logout" role="button">logout</a>
+  			<a class="btn btn-default" href="/auth/logout" role="button">logout</a>
 		</div>
     </div>
 @stop
